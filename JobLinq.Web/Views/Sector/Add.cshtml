@@ -1,0 +1,18 @@
+﻿@using JobLinq.Web.ViewModels;
+@model SectorViewModel
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Sektör Ekle</h1>
+
+
+<form asp-controller="Sector" asp-action="Add" method="post" class="mt-5">
+    <div class="mb-3">
+        <label class="form-label">Sektör Adı</label>
+        <input type="text" class="form-control" asp-for="SectorName" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2"> Kaydet </button>
+</form>
+
+

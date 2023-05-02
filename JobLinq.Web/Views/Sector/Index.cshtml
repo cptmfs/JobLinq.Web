@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Sector>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Sektörler</h1>
+<hr />
+
+<a asp-action="Add" class="genric-btn success-border">Sektör Ekle</a>
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th>Sektör ID</th>
+                        <th>Sektör Adı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SectorId</td>
+                            <td>@item.SectorName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

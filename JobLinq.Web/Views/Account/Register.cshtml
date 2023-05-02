@@ -1,0 +1,27 @@
+﻿@using JobLinq.Web.ViewModels;
+@model UserViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Kullanıcı Kayıt</h1>
+<hr />
+
+<form asp-controller="Account" asp-action="Register" method="post" class="mt-5">
+    <div class="mb-3">
+        <label class="form-label">E-Mail</label>
+        <input type="email" class="form-control" asp-for="UserEmail" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" asp-for="UserPassword" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Kullanıcı Tipi</label>
+        <select class="form-select" asp-for="UserType" asp-items="@ViewBag.UserType">
+            <option value="">Kullanıcı Tipi Seçiniz</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2" > Kaydet </button>
+</form>
+

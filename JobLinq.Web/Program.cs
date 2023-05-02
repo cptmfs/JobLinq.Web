@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DbjoblinqContext>(Options => Options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=DBJoblinq;Trusted_Connection=True;"));
+//builder.Services.AddDbContext<DbjoblinqContext>(Options => Options.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=DBJoblinq;Trusted_Connection=True;"));
+builder.Services.AddDbContext<DBJoblinqContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
 var app = builder.Build();
 

@@ -9,87 +9,87 @@ using JobLinq.Web.Models;
 
 namespace JobLinq.Web.Controllers
 {
-    public class TblilansController : Controller
+    public class CandidatesController : Controller
     {
-        private readonly DbjoblinqContext _context;
+        private readonly DBJoblinqContext _context;
 
-        public TblilansController(DbjoblinqContext context)
+        public CandidatesController(DBJoblinqContext context)
         {
             _context = context;
         }
 
-        // GET: Tblilans
+        // GET: Candidates
         public async Task<IActionResult> Index()
         {
-              return _context.Tblilans != null ? 
-                          View(await _context.Tblilans.ToListAsync()) :
-                          Problem("Entity set 'DbjoblinqContext.Tblilans'  is null.");
+              return _context.Candidates != null ? 
+                          View(await _context.Candidates.ToListAsync()) :
+                          Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
         }
 
-        // GET: Tblilans/Details/5
+        // GET: Candidates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tblilans == null)
+            if (id == null || _context.Candidates == null)
             {
                 return NotFound();
             }
 
-            var tblilan = await _context.Tblilans
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tblilan == null)
+            var candidate = await _context.Candidates
+                .FirstOrDefaultAsync(m => m.CandidateId == id);
+            if (candidate == null)
             {
                 return NotFound();
             }
 
-            return View(tblilan);
+            return View(candidate);
         }
 
-        // GET: Tblilans/Create
+        // GET: Candidates/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tblilans/Create
+        // POST: Candidates/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Sirket,Departman,Tecrube,EgitimSeviyesi,YabancilDil,CalismaSekli,Pozisyon,Sehir,IlanDetay")] Tblilan tblilan)
+        public async Task<IActionResult> Create([Bind("CandidateId,UserId,Fname,Lname,BirthDate,CityId,Gsmno")] Candidate candidate)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tblilan);
+                _context.Add(candidate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tblilan);
+            return View(candidate);
         }
 
-        // GET: Tblilans/Edit/5
+        // GET: Candidates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tblilans == null)
+            if (id == null || _context.Candidates == null)
             {
                 return NotFound();
             }
 
-            var tblilan = await _context.Tblilans.FindAsync(id);
-            if (tblilan == null)
+            var candidate = await _context.Candidates.FindAsync(id);
+            if (candidate == null)
             {
                 return NotFound();
             }
-            return View(tblilan);
+            return View(candidate);
         }
 
-        // POST: Tblilans/Edit/5
+        // POST: Candidates/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Sirket,Departman,Tecrube,EgitimSeviyesi,YabancilDil,CalismaSekli,Pozisyon,Sehir,IlanDetay")] Tblilan tblilan)
+        public async Task<IActionResult> Edit(int id, [Bind("CandidateId,UserId,Fname,Lname,BirthDate,CityId,Gsmno")] Candidate candidate)
         {
-            if (id != tblilan.Id)
+            if (id != candidate.CandidateId)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace JobLinq.Web.Controllers
             {
                 try
                 {
-                    _context.Update(tblilan);
+                    _context.Update(candidate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TblilanExists(tblilan.Id))
+                    if (!CandidateExists(candidate.CandidateId))
                     {
                         return NotFound();
                     }
@@ -114,49 +114,49 @@ namespace JobLinq.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tblilan);
+            return View(candidate);
         }
 
-        // GET: Tblilans/Delete/5
+        // GET: Candidates/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tblilans == null)
+            if (id == null || _context.Candidates == null)
             {
                 return NotFound();
             }
 
-            var tblilan = await _context.Tblilans
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tblilan == null)
+            var candidate = await _context.Candidates
+                .FirstOrDefaultAsync(m => m.CandidateId == id);
+            if (candidate == null)
             {
                 return NotFound();
             }
 
-            return View(tblilan);
+            return View(candidate);
         }
 
-        // POST: Tblilans/Delete/5
+        // POST: Candidates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tblilans == null)
+            if (_context.Candidates == null)
             {
-                return Problem("Entity set 'DbjoblinqContext.Tblilans'  is null.");
+                return Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
             }
-            var tblilan = await _context.Tblilans.FindAsync(id);
-            if (tblilan != null)
+            var candidate = await _context.Candidates.FindAsync(id);
+            if (candidate != null)
             {
-                _context.Tblilans.Remove(tblilan);
+                _context.Candidates.Remove(candidate);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TblilanExists(int id)
+        private bool CandidateExists(int id)
         {
-          return (_context.Tblilans?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Candidates?.Any(e => e.CandidateId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<JobLinq.Web.Models.Advert>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdvertTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdvertDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdvertTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdvertDetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobType)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AdvertId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AdvertId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AdvertId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
