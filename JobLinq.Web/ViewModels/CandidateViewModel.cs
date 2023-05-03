@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JobLinq.Web.Models;
 using System.ComponentModel;
 
-namespace JobLinq.Web.Models
+namespace JobLinq.Web.ViewModels
 {
-    public partial class Candidate
+    public class CandidateViewModel
     {
         public int CandidateId { get; set; }
         [DisplayName("Kullanıcı ID")]
@@ -19,6 +18,6 @@ namespace JobLinq.Web.Models
         public byte? CityId { get; set; }
         [DisplayName("Tel No")]
         public string? Gsmno { get; set; }
-        public City? City { get; set; }
+        public City City { get; set; }
     }
 }

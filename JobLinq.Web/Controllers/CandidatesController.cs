@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobLinq.Web.Models;
 using Newtonsoft.Json.Linq;
+using JobLinq.Web.ViewModels;
 
 namespace JobLinq.Web.Controllers
 {
@@ -22,18 +23,51 @@ namespace JobLinq.Web.Controllers
         // GET: Candidates
         public async Task<IActionResult> Index()
         {
-            var city = _context.Candidates.OrderByDescending(p=> p.CandidateId).Select(x=> new ()
-            {
-                x.UserId,
-                x.Fname,
-                x.Lname,
-                x.BirthDate,
-                x.City.CityName,
-                x.Gsmno
-            });
-              return _context.Candidates != null ? 
-                          View(await city) :
-                          Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
+            //if (_context.Candidates == null)
+            //{
+            //    return Problem("Entity set 'DBJoblinqContext.Candidates' is null.");
+            //}
+
+            //var city = await _context.Candidates
+            //    .OrderByDescending(p => p.CandidateId)
+            //    .Include(c => c.City)
+            //    .ToListAsync();
+
+            //return View(city);
+
+
+            //var city = _context.Candidates
+            //   .OrderByDescending(p => p.CandidateId)
+            //   .Select(x => new
+            //   {
+            //       x.UserId,
+            //       x.Fname,
+            //       x.Lname,
+            //       x.BirthDate,
+            //       x.CityId,
+            //       x.City.CityName,
+            //       x.Gsmno
+            //   })
+            //   .ToList();
+            //return View(city);
+
+            //var city =  _context.Candidates.OrderByDescending(p => p.CandidateId).Select(x =>new
+            //{
+            //    x.UserId,
+            //    x.Fname,
+            //    x.Lname,
+            //    x.BirthDate,
+            //    x.City.CityName,
+            //    x.Gsmno
+            //});
+
+            var city =  _context.Candidates
+                .OrderByDescending(p => p.CandidateId)
+                .Include(c => c.City);
+            return _context.Candidates != null ?
+                        View(await city.ToListAsync()) :
+                        Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
+
         }
 
         // GET: Candidates/Details/5
