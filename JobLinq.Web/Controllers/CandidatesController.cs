@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobLinq.Web.Models;
+using Newtonsoft.Json.Linq;
 
 namespace JobLinq.Web.Controllers
 {
@@ -21,8 +22,17 @@ namespace JobLinq.Web.Controllers
         // GET: Candidates
         public async Task<IActionResult> Index()
         {
+            var city = _context.Candidates.OrderByDescending(p=> p.CandidateId).Select(x=> new ()
+            {
+                x.UserId,
+                x.Fname,
+                x.Lname,
+                x.BirthDate,
+                x.City.CityName,
+                x.Gsmno
+            });
               return _context.Candidates != null ? 
-                          View(await _context.Candidates.ToListAsync()) :
+                          View(await city) :
                           Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
         }
 
@@ -47,6 +57,22 @@ namespace JobLinq.Web.Controllers
         // GET: Candidates/Create
         public IActionResult Create()
         {
+            //ViewBag.city = new SelectList(new List<City>()
+            //{
+            //    new(){CityName="İstanbul",CityId=1},
+            //    new(){CityName="Ankara",CityId=2},
+            //    new(){CityName="İzmir",CityId=3},
+            //    new(){CityName="Kastamonu",CityId=4},
+            //}, "CityId", "CityName");
+
+            //Bu yöntem ile veritabanından verileri dropdownlist içerisine doldurmayı başarıyoruz..
+            List<SelectListItem> citylist = (from cl in _context.Cities.ToList()
+                                             select new SelectListItem
+                                             {
+                                                Value=cl.CityId.ToString(),
+                                                Text=cl.CityName
+                                             }).OrderBy(i=> i.Text).ToList();
+            ViewBag.citylist= citylist;
             return View();
         }
 

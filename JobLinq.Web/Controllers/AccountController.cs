@@ -38,9 +38,9 @@ namespace JobLinq.Web.Controllers
         {
             ViewBag.UserType=new SelectList(new List<UserType>()
             {
-                new(){Data="Admin",Value="A"},
-                new(){Data="User",Value="U"},
-            },"Value","Data");
+                new(){Data="A",Value="Admin"},
+                new(){Data="U",Value="User"},
+            },"Data","Value");
 
             return View();
         }
