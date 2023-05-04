@@ -21,8 +21,10 @@ namespace JobLinq.Web.Controllers
         // GET: Companies
         public async Task<IActionResult> Index()
         {
+            var city=_context.Companies.OrderBy(i=> i.UserId).Include(i=> i.City);
+
               return _context.Companies != null ? 
-                          View(await _context.Companies.ToListAsync()) :
+                          View(await city.ToListAsync()) :
                           Problem("Entity set 'DBJoblinqContext.Companies'  is null.");
         }
 
@@ -47,6 +49,14 @@ namespace JobLinq.Web.Controllers
         // GET: Companies/Create
         public IActionResult Create()
         {
+            List<SelectListItem> citylist = (from cl in _context.Cities.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Value = cl.CityId.ToString(),
+                                                 Text = cl.CityName
+                                             }).OrderBy(i => i.Text).ToList();
+            ViewBag.citylist = citylist;
+
             return View();
         }
 
@@ -61,14 +71,23 @@ namespace JobLinq.Web.Controllers
             {
                 _context.Add(company);
                 await _context.SaveChangesAsync();
+                TempData["status"] = "Şirket Başarıyla Eklendi.";
                 return RedirectToAction(nameof(Index));
             }
+
             return View(company);
         }
 
         // GET: Companies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            List<SelectListItem> citylist = (from cl in _context.Cities.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Value = cl.CityId.ToString(),
+                                                 Text = cl.CityName
+                                             }).OrderBy(i => i.Text).ToList();
+            ViewBag.citylist = citylist;
             if (id == null || _context.Companies == null)
             {
                 return NotFound();

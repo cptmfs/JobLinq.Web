@@ -69,7 +69,6 @@ namespace JobLinq.Web.Controllers
                         Problem("Entity set 'DBJoblinqContext.Candidates'  is null.");
 
         }
-
         // GET: Candidates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -139,6 +138,15 @@ namespace JobLinq.Web.Controllers
             {
                 return NotFound();
             }
+
+
+            List<SelectListItem> citylist = (from cl in _context.Cities.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Value = cl.CityId.ToString(),
+                                                 Text = cl.CityName
+                                             }).OrderBy(i => i.Text).ToList();
+            ViewBag.citylist = citylist;
             return View(candidate);
         }
 
